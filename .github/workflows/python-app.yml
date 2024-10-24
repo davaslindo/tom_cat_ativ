@@ -28,9 +28,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Deploy no EC2 - AWS
+        
+    #- name: Deploy no EC2 - AWS
+    #  run: |
+    #       echo "Conectando no EC2"
+    #       echo "${{secrets.AWS_KEY}}" > private_key && chmod 600 private_key 
+    #       ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-84-90-120.compute-1.amazonaws.com "
+    #           cd tom_cat_ativ/;git pull;./iniciarApp.sh"
+
+  
+    - name: Acesso EC2
       run: |
-            echo "Conectando no EC2"
-            echo "${{secrets.AWS_KEY}}" > private_key && chmod 600 private_key 
-            ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-84-90-120.compute-1.amazonaws.com "
-                cd tom_cat_ativ/;git pull;./iniciarApp.sh"
+           echo "Conectando no EC2"
+           echo "${{secrets.AWS_KEY}}" > private_key && chmod 600 private_key 
+           ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-84-90-120.compute-1.amazonaws.com "
+               cd /var/www/html &&
+               git pull "
+
